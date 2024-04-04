@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="pill_width">100dp</dimen>
+    <dimen name="pill_height">100dp</dimen>
+    <dimen name="pill_vertical_margin">5dp</dimen>
+    <dimen name="pill_corner_radius">20dp</dimen>
+    <dimen name="pill_elevation">10dp</dimen>
+    <dimen name="data_start_margin">60dp</dimen>
+    <dimen name="data_end_margin">5dp</dimen>
+    <dimen name="data_elevation">8dp</dimen>
+    <dimen name="title_text_size">25sp</dimen>
+    <dimen name="data_text_size">18sp</dimen>
+    <dimen name="time_text_size" >30sp</dimen>
+</resources>
