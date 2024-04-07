@@ -1,9 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.AddNewPillActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <LinearLayout
+        android:id="@+id/headline_LAY_menu"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/add_BTN_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:text="Back"/>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/logo_IMG_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </com.google.android.material.imageview.ShapeableImageView>
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:id="@+id/add_LAY_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/headline_LAY_menu"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/add_TXT_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pill Name"
+        android:textSize="@dimen/title_text_size"/>
+
+    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+
+        />
+    </LinearLayout>
+
+
+
+<!--    Quantity-->
+    <LinearLayout
+        android:id="@+id/add_LAY_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_LAY_name"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center">
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/add_TXT_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quantity"
+            android:textSize="@dimen/title_text_size"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            />
+    </LinearLayout>
+
+
+    <!--    Duration -->
+    <LinearLayout
+        android:id="@+id/add_LAY_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_LAY_quantity"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center">
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Duration"
+            android:textSize="@dimen/title_text_size"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            />
+    </LinearLayout>
+
+
+
+    <!--    Before Or After Meal -->
+    <LinearLayout
+        android:id="@+id/add_LAY_meal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_LAY_duration"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center">
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Meal"
+            android:textSize="@dimen/title_text_size"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            />
+    </LinearLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_BTN_add"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_below="@id/add_LAY_meal"
+        android:layout_marginTop="80dp"
+        android:layout_centerHorizontal="true"
+        android:text="V"
+        android:textSize="80dp"
+        android:backgroundTint="@color/green_500"/>
+</RelativeLayout>

@@ -9,9 +9,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pillminderapp.Interfaces.RemoveCallback;
+import com.example.pillminderapp.Model.Cabinet;
 import com.example.pillminderapp.Model.Pill;
 import com.example.pillminderapp.R;
 import com.example.pillminderapp.Utilities.ImageLoader;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
@@ -25,9 +28,15 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder
     private ArrayList<Pill> pills;
 
 
-    public PillAdapter(Context context, ArrayList<Pill> pills) {
+    private RemoveCallback removeCallback;
+
+    public void setRemoveCallback(RemoveCallback removeCallback) {
+        this.removeCallback = removeCallback;
+    }
+
+    public PillAdapter(Context context, Cabinet pills) {
         this.context = context;
-        this.pills = pills;
+        this.pills = pills.getPills();
     }
 
     private Pill getItem(int position) {
@@ -59,7 +68,7 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder
     }
 
 
-    public static class PillViewHolder extends RecyclerView.ViewHolder {
+    public class PillViewHolder extends RecyclerView.ViewHolder {
 
         private MaterialTextView pill_LBL_name;
         private MaterialTextView pill_LBL_time;
@@ -68,6 +77,8 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder
         private MaterialTextView pill_LBL_quantity;
         private MaterialCardView pill_CARD_data;
         private ShapeableImageView pill_IMG_poster;
+
+        private MaterialButton pill_BTN_remove;
 
         public PillViewHolder(@NonNull View itemView) {
 
@@ -79,7 +90,10 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder
             pill_LBL_quantity = itemView.findViewById(R.id.pill_LBL_quantity);
             pill_CARD_data = itemView.findViewById(R.id.pill_CARD_data);
             pill_IMG_poster = itemView.findViewById(R.id.pill_IMG_poster);
-
+            pill_BTN_remove = itemView.findViewById(R.id.pill_BTN_remove);
+            pill_BTN_remove.setOnClickListener(v->{
+                    removeCallback.removePill(pills,getAdapterPosition());
+            });
         }
     }
 }

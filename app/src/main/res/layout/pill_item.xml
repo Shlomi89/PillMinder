@@ -42,11 +42,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
+
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/data_end_margin"
             android:layout_marginStart="@dimen/data_start_margin">
+
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/pill_LBL_name"
@@ -62,6 +67,37 @@
                 android:textSize="@dimen/title_text_size"
                 android:textStyle="bold"
                 tools:text="Pill Name" />
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/pill_BTN_remove"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/red"
+                android:scaleType="fitCenter"
+                android:text="X"/>
+
+
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="19dp"
+                android:maxLines="1"
+                android:minLines="1"
+                android:textSize="@dimen/data_text_size"
+                android:textColor="@color/white"
+                tools:text="X"
+                tools:ignore="RelativeOverlap" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/pill_LBL_desc"
