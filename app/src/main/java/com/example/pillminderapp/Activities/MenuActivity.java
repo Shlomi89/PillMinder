@@ -1,31 +1,22 @@
 package com.example.pillminderapp.Activities;
 
-import static java.security.AccessController.getContext;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View;
 
 import com.example.pillminderapp.Adapters.PillAdapter;
 import com.example.pillminderapp.Interfaces.RemoveCallback;
 import com.example.pillminderapp.Model.Cabinet;
-import com.example.pillminderapp.Model.Pill;
+import com.example.pillminderapp.Model.Prescription;
 import com.example.pillminderapp.R;
 import com.example.pillminderapp.Utilities.DataManager;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -60,9 +51,13 @@ public class MenuActivity extends AppCompatActivity {
         recyclerview_list_pills.setAdapter(pillAdapter);
         pillAdapter.setRemoveCallback(new RemoveCallback() {
             @Override
-            public void removePill(ArrayList<Pill> pills, int position) {
-                pills.remove(position);
-                recyclerview_list_pills.getAdapter().notifyItemRemoved(position);
+            public void removePill(ArrayList<Prescription> prescriptions, int position) {
+                String nameOfpill = prescriptions.get(position).getName();
+                prescriptions.removeIf(p -> p.getName().matches(nameOfpill));
+                recyclerview_list_pills.getAdapter().notifyDataSetChanged();
+
+//                pills.remove(position);
+//                recyclerview_list_pills.getAdapter().notifyItemRemoved(position);
             }
         });
     }

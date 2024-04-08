@@ -1,22 +1,21 @@
 package com.example.pillminderapp.Model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class Cabinet {
 
-    ArrayList<Pill> Pills = new ArrayList<>();
+    ArrayList<Prescription> prescriptions = new ArrayList<>();
 
 
-    public ArrayList<Pill> getPills() {
-        return Pills;
+    public ArrayList<Prescription> getPills() {
+        return prescriptions;
     }
 
 
-    public void addNewPill(Pill pill) {
-        Pills.add(pill);
-        Collections.sort(Pills);
+    public void addNewPrescription(Prescription prescription) {
+        prescriptions.add(prescription);
+        Collections.sort(prescriptions);
     }
 
 

@@ -45,4 +45,5 @@ dependencies {
     implementation ("com.firebaseui:firebase-ui-auth:7.2.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation ("com.google.code.gson:gson:2.10.1")
+    implementation ("androidx.appcompat:appcompat:1.4.0")
 }

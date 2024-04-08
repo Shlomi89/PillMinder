@@ -7,28 +7,26 @@
     tools:context=".Activities.AddNewPillActivity">
 
 
-
     <LinearLayout
         android:id="@+id/headline_LAY_menu"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center"
         android:orientation="horizontal">
+
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/add_BTN_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginLeft="10dp"
-            android:text="Back"/>
+            android:gravity="center"
+            android:text="Back" />
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/logo_IMG_menu"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </com.google.android.material.imageview.ShapeableImageView>
+            android:layout_height="match_parent"></com.google.android.material.imageview.ShapeableImageView>
     </LinearLayout>
-
-
 
 
     <LinearLayout
@@ -36,49 +34,59 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/headline_LAY_menu"
-        android:layout_marginTop="50dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
         android:gravity="center">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/add_TXT_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pill Name"
-        android:textSize="@dimen/title_text_size"/>
+        <!--        <com.google.android.material.textview.MaterialTextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Quantity"-->
+        <!--            android:textSize="@dimen/title_text_size"/> -->
 
-    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
 
-        />
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/add_TXT_name"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:hint="Pill Name" />
     </LinearLayout>
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/add_IMG_pill"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/headline_LAY_menu"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp" />
 
-
-<!--    Quantity-->
+    <!--    Quantity-->
     <LinearLayout
         android:id="@+id/add_LAY_quantity"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/add_LAY_name"
-        android:layout_marginTop="50dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
         android:gravity="center">
 
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/add_TXT_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Quantity"
-            android:textSize="@dimen/title_text_size"/>
+            android:gravity="center"
+            android:textSize="@dimen/title_text_size" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/add_SPN_quantity"
+            android:layout_width="75dp"
+            android:layout_height="50dp"
             android:layout_marginStart="15dp"
+            android:layout_weight="1"
+            android:entries="@array/quantityItems"
             />
     </LinearLayout>
 
@@ -86,66 +94,120 @@
     <!--    Duration -->
     <LinearLayout
         android:id="@+id/add_LAY_duration"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/add_LAY_quantity"
-        android:layout_marginTop="50dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
         android:gravity="center">
 
 
         <com.google.android.material.textview.MaterialTextView
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:text="Duration"
-            android:textSize="@dimen/title_text_size"/>
+            android:textSize="@dimen/title_text_size" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            />
+            android:hint="Duration" />
     </LinearLayout>
-
 
 
     <!--    Before Or After Meal -->
     <LinearLayout
         android:id="@+id/add_LAY_meal"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/add_LAY_duration"
-        android:layout_marginTop="50dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
         android:gravity="center">
 
 
         <com.google.android.material.textview.MaterialTextView
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_width="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:text="Meal"
-            android:textSize="@dimen/title_text_size"/>
+            android:textSize="@dimen/title_text_size" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/add_SPN_meal"
+            android:layout_width="75dp"
+            android:layout_height="50dp"
             android:layout_marginStart="15dp"
+            android:layout_weight="1"
+            android:entries="@array/mealItems"
+
+            />
+    </LinearLayout>
+
+
+    <!--    Before Or After Meal -->
+    <LinearLayout
+        android:id="@+id/add_LAY_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_LAY_meal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center">
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Time"
+            android:textSize="@dimen/title_text_size" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/add_SPN_hour"
+            android:layout_width="75dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_weight="1"
+            android:entries="@array/hourItems"
+            />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="15dp"
+            android:textSize="@dimen/data_text_size"
+            android:gravity="center"
+            android:text=":"/>
+
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/add_SPN_minute"
+            android:layout_width="75dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="15dp"
+            android:layout_weight="1"
+            android:entries="@array/minuteItems"
+
             />
     </LinearLayout>
 
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/add_BTN_add"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_below="@id/add_LAY_meal"
-        android:layout_marginTop="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/add_LAY_time"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/green_500"
         android:text="V"
-        android:textSize="80dp"
-        android:backgroundTint="@color/green_500"/>
+        android:textSize="60dp" />
 </RelativeLayout>

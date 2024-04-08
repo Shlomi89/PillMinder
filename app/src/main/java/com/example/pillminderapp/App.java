@@ -3,6 +3,7 @@ package com.example.pillminderapp;
 import android.app.Application;
 
 import com.example.pillminderapp.Utilities.ImageLoader;
+import com.example.pillminderapp.Utilities.PopupUtility;
 import com.example.pillminderapp.Utilities.SharedPreferencesManager;
 
 public class App extends Application {
@@ -12,5 +13,6 @@ public class App extends Application {
         super.onCreate();
         SharedPreferencesManager.init(this);
         ImageLoader.initImageLoader(this);
+        PopupUtility.initPopupUtility(this);
     }
 }

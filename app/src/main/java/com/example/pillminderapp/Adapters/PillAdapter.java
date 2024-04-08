@@ -1,7 +1,6 @@
 package com.example.pillminderapp.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pillminderapp.Interfaces.RemoveCallback;
 import com.example.pillminderapp.Model.Cabinet;
-import com.example.pillminderapp.Model.Pill;
+import com.example.pillminderapp.Model.Prescription;
 import com.example.pillminderapp.R;
 import com.example.pillminderapp.Utilities.ImageLoader;
 import com.google.android.material.button.MaterialButton;
@@ -25,7 +24,7 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder
 
 
     private Context context;
-    private ArrayList<Pill> pills;
+    private ArrayList<Prescription> prescriptions;
 
 
     private RemoveCallback removeCallback;
@@ -36,11 +35,11 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder
 
     public PillAdapter(Context context, Cabinet pills) {
         this.context = context;
-        this.pills = pills.getPills();
+        this.prescriptions = pills.getPills();
     }
 
-    private Pill getItem(int position) {
-        return pills.get(position);
+    private Prescription getItem(int position) {
+        return prescriptions.get(position);
     }
 
 
@@ -53,18 +52,18 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull PillAdapter.PillViewHolder holder, int position) {
-        Pill pill = getItem(position);
-        ImageLoader.getInstance().load(pill.getImgURL(),holder.pill_IMG_poster);
-        holder.pill_LBL_name.setText(pill.getName());
-        holder.pill_LBL_isMeal.setText(pill.getMeal());
-        holder.pill_LBL_quantity.setText("" + pill.getQuantity());
-        holder.pill_LBL_time.setText(String.valueOf(pill.getTime()));
+        Prescription prescription = getItem(position);
+        ImageLoader.getInstance().load(prescription.getImgURL(),holder.pill_IMG_poster);
+        holder.pill_LBL_name.setText(prescription.getName());
+        holder.pill_LBL_isMeal.setText(prescription.getMeal());
+        holder.pill_LBL_quantity.setText("" + prescription.getQuantity());
+        holder.pill_LBL_time.setText(String.valueOf(prescription.getTime()));
 
     }
 
     @Override
     public int getItemCount() {
-        return pills == null ? 0 : pills.size();
+        return prescriptions == null ? 0 : prescriptions.size();
     }
 
 
@@ -92,7 +91,7 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder
             pill_IMG_poster = itemView.findViewById(R.id.pill_IMG_poster);
             pill_BTN_remove = itemView.findViewById(R.id.pill_BTN_remove);
             pill_BTN_remove.setOnClickListener(v->{
-                    removeCallback.removePill(pills,getAdapterPosition());
+                    removeCallback.removePill(prescriptions,getAdapterPosition());
             });
         }
     }

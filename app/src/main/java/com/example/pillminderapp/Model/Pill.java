@@ -1,22 +1,14 @@
 package com.example.pillminderapp.Model;
 
-public class Pill implements Comparable<Pill>{
+public class Pill {
     private String name;
-    private Boolean isAfterMeal;
-    private int quantity;
+    private String ImgURL;
+    private String description;
 
-    private String imgURL;
 
-    private int hour;
-    private int minute;
-
-    public Pill(String name, Boolean isAfterMeal, int quantity, String imgURL, int hour, int minute) {
+    public Pill(String name, String imgURL) {
         this.name = name;
-        this.isAfterMeal = isAfterMeal;
-        this.quantity = quantity;
-        this.imgURL = imgURL;
-        this.hour = hour;
-        this.minute = minute;
+        ImgURL = imgURL;
     }
 
     public String getName() {
@@ -27,68 +19,19 @@ public class Pill implements Comparable<Pill>{
         this.name = name;
     }
 
-    public Boolean getAfterMeal() {
-        return isAfterMeal;
-    }
-
-    public void setAfterMeal(Boolean afterMeal) {
-        isAfterMeal = afterMeal;
-    }
-
     public String getImgURL() {
-        return imgURL;
+        return ImgURL;
     }
 
     public void setImgURL(String imgURL) {
-        this.imgURL = imgURL;
+        ImgURL = imgURL;
     }
 
-    public int getHour() {
-        return hour;
+    public String getDescription() {
+        return description;
     }
 
-    public void setHour(int hour) {
-        this.hour = hour;
-    }
-
-    public int getMinute() {
-        return minute;
-    }
-
-    public void setMinute(int minute) {
-        this.minute = minute;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getTime(){
-        return hour + ":" + minute;
-    }
-
-
-
-    // Implementing compareTo method for comparing pills based on time
-    @Override
-    public int compareTo(Pill otherPill) {
-        // Compare based on hour
-        int hourComparison = Integer.compare(this.hour, otherPill.getHour());
-        if (hourComparison != 0) {
-            return hourComparison;
-        }
-        // If hours are same, compare based on minute
-        return Integer.compare(this.minute, otherPill.getMinute());
-    }
-
-    public String getMeal() {
-        if (this.getAfterMeal()){
-            return "After Meal";
-        }
-        return "Before Meal";
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
