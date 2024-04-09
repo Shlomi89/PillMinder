@@ -1,15 +1,14 @@
 package com.example.pillminderapp.Activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.QuickContactBadge;
 
 import com.example.pillminderapp.Model.Pill;
 import com.example.pillminderapp.Model.Prescription;
@@ -48,17 +47,14 @@ public class AddNewPillActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_pill);
         findViews();
         pillTextListener();
-        add_CHK_permanent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (((MaterialCheckBox) v).isChecked()){
-                    add_TXT_duration.setEnabled(false);
-                    add_TXTVIEW_duration.setVisibility(View.INVISIBLE);
-                }
-                else {
-                    add_TXT_duration.setEnabled(true);
-                    add_TXTVIEW_duration.setVisibility(View.VISIBLE);
-                }
+        add_CHK_permanent.setOnClickListener(v -> {
+            if (((MaterialCheckBox) v).isChecked()){
+                add_TXT_duration.setEnabled(false);
+                add_TXTVIEW_duration.setVisibility(View.INVISIBLE);
+            }
+            else {
+                add_TXT_duration.setEnabled(true);
+                add_TXTVIEW_duration.setVisibility(View.VISIBLE);
             }
         });
 
@@ -69,18 +65,39 @@ public class AddNewPillActivity extends AppCompatActivity {
     }
 
     private void addPrescription() {
-        Prescription prescription = new Prescription();
-        prescription.setName(add_TXT_name.getText().toString());
-        prescription.setQuantity(Integer.parseInt(add_SPN_quantity.getSelectedItem().toString()));
-        prescription.setAfterMeal(add_SPN_meal.getSelectedItemPosition());
-        if (add_TXT_duration.isEnabled()) {
-            // TODO: Duration in Class Prescription
-        }
-        else {
-            // TODO: Duration in Class Prescription
-            //prescrpstion.setduration -1
-        }
+        double decimalHours =  24 / Double.parseDouble(add_SPN_frequency.getSelectedItem().toString());
 
+        int addhour = (int) decimalHours;
+        int addminute = (int) ((decimalHours - addhour) * 60);
+
+
+        int hour = Integer.parseInt(add_SPN_hour.getSelectedItem().toString());
+        int minute = Integer.parseInt(add_SPN_minute.getSelectedItem().toString());
+        for (int i =0; i<Integer.parseInt(add_SPN_frequency.getSelectedItem().toString()); i++) {
+//        Prescription prescription = new Prescription(add_TXT_name.getText().toString(),add_SPN_meal.getSelectedItemPosition(),Integer.parseInt(add_SPN_quantity.getSelectedItem().toString()),"",Integer.parseInt(add_SPN_hour.getSelectedItem().toString()),Integer.parseInt(add_SPN_minute.getSelectedItem().toString()),add_CHK_permanent ? );
+
+            Prescription prescription = new Prescription();
+            prescription.setName(add_TXT_name.getText().toString());
+            prescription.setQuantity(Integer.parseInt(add_SPN_quantity.getSelectedItem().toString()));
+            prescription.setAfterMeal(add_SPN_meal.getSelectedItemPosition());
+            if (add_CHK_permanent.isChecked()) {
+                prescription.setEndDate(-1);
+            } else {
+                prescription.setEndDate(Integer.parseInt(add_TXT_duration.getText().toString()));
+            }
+
+            prescription.setHour(hour);
+            prescription.setMinute(minute);
+            Log.d("Pres", prescription.toString());
+            hour += addhour;
+            if (hour > 24)
+                hour = hour-24;
+            minute += addminute;
+            if (minute > 60)
+                minute = minute-60;
+
+
+        }
     }
 
 

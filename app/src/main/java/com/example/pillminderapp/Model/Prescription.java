@@ -1,11 +1,18 @@
 package com.example.pillminderapp.Model;
 
+import androidx.annotation.NonNull;
+
+import java.time.LocalDate;
+
+
 public class Prescription implements Comparable<Prescription> {
     private String name;
     private int isAfterMeal;
     private int quantity;
 
     private String imgURL;
+
+    private LocalDate endDate;
 
     private int hour;
     private int minute;
@@ -14,13 +21,18 @@ public class Prescription implements Comparable<Prescription> {
     public Prescription() {
     }
 
-    public Prescription(String name, int isAfterMeal, int quantity, String imgURL, int hour, int minute) {
+    public Prescription(String name, int isAfterMeal, int quantity, String imgURL, int hour, int minute, int duration) {
         this.name = name;
         this.isAfterMeal = isAfterMeal;
         this.quantity = quantity;
         this.imgURL = imgURL;
         this.hour = hour;
         this.minute = minute;
+        if (duration != -1)
+            this.endDate = LocalDate.now().plusDays(duration);
+        else
+            this.endDate = LocalDate.of(1970, 1, 1);
+
     }
 
     public String getName() {
@@ -71,6 +83,18 @@ public class Prescription implements Comparable<Prescription> {
         this.quantity = quantity;
     }
 
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(int duration) {
+        if (duration == -1)
+            this.endDate = LocalDate.of(1970, 1, 1);
+        else
+            this.endDate = LocalDate.now().plusDays(duration);
+    }
+
     public String getTime() {
         return hour + ":" + minute;
     }
@@ -95,5 +119,20 @@ public class Prescription implements Comparable<Prescription> {
             return "Before Meal";
 
         return "Not Specified";
+    }
+
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Prescription{" +
+                "name='" + name + '\'' +
+                ", isAfterMeal=" + isAfterMeal +
+                ", quantity=" + quantity +
+                ", imgURL='" + imgURL + '\'' +
+                ", endDate=" + endDate +
+                ", hour=" + hour +
+                ", minute=" + minute +
+                '}';
     }
 }
