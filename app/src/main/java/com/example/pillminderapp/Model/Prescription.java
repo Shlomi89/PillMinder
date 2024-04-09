@@ -1,8 +1,8 @@
 package com.example.pillminderapp.Model;
 
-public class Prescription implements Comparable<Prescription>{
+public class Prescription implements Comparable<Prescription> {
     private String name;
-    private Boolean isAfterMeal;
+    private int isAfterMeal;
     private int quantity;
 
     private String imgURL;
@@ -10,7 +10,11 @@ public class Prescription implements Comparable<Prescription>{
     private int hour;
     private int minute;
 
-    public Prescription(String name, Boolean isAfterMeal, int quantity, String imgURL, int hour, int minute) {
+
+    public Prescription() {
+    }
+
+    public Prescription(String name, int isAfterMeal, int quantity, String imgURL, int hour, int minute) {
         this.name = name;
         this.isAfterMeal = isAfterMeal;
         this.quantity = quantity;
@@ -27,11 +31,11 @@ public class Prescription implements Comparable<Prescription>{
         this.name = name;
     }
 
-    public Boolean getAfterMeal() {
+    public int getAfterMeal() {
         return isAfterMeal;
     }
 
-    public void setAfterMeal(Boolean afterMeal) {
+    public void setAfterMeal(int afterMeal) {
         isAfterMeal = afterMeal;
     }
 
@@ -67,10 +71,9 @@ public class Prescription implements Comparable<Prescription>{
         this.quantity = quantity;
     }
 
-    public String getTime(){
+    public String getTime() {
         return hour + ":" + minute;
     }
-
 
 
     // Implementing compareTo method for comparing pills based on time
@@ -86,9 +89,11 @@ public class Prescription implements Comparable<Prescription>{
     }
 
     public String getMeal() {
-        if (this.getAfterMeal()){
+        if (this.getAfterMeal() == 2) {
             return "After Meal";
-        }
-        return "Before Meal";
+        } else if (this.getAfterMeal() == 1)
+            return "Before Meal";
+
+        return "Not Specified";
     }
 }

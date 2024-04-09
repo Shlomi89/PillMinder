@@ -49,8 +49,8 @@
             android:id="@+id/add_TXT_name"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:hint="Pill Name" />
+            android:hint="Pill Name"
+            android:textSize="25sp" />
     </LinearLayout>
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -69,15 +69,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/add_LAY_name"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:gravity="center">
 
 
         <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Quantity"
+            android:layout_weight="1"
             android:gravity="center"
+            android:text="Quantity:"
             android:textSize="@dimen/title_text_size" />
 
         <androidx.appcompat.widget.AppCompatSpinner
@@ -85,9 +86,16 @@
             android:layout_width="75dp"
             android:layout_height="50dp"
             android:layout_marginStart="15dp"
-            android:layout_weight="1"
             android:entries="@array/quantityItems"
-            />
+            android:scrollbarSize="25dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Pills"
+            android:textSize="@dimen/title_text_size" />
     </LinearLayout>
 
 
@@ -98,23 +106,43 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/add_LAY_quantity"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:gravity="center">
 
 
+        <!--        <com.google.android.material.textview.MaterialTextView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="Duration:"-->
+        <!--            android:textSize="@dimen/title_text_size" />-->
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/add_TXT_duration"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:hint="Duration"
+            android:inputType="numberDecimal"
+            android:textSize="25sp" />
+
+
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/add_TXTVIEW_duration"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Duration"
+            android:text="Days"
             android:textSize="@dimen/title_text_size" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="250dp"
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/add_CHK_permanent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:hint="Duration" />
+            android:layout_marginEnd="15dp"
+            android:textSize="20sp"
+            android:text="Permanent"/>
     </LinearLayout>
 
 
@@ -125,7 +153,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/add_LAY_duration"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:gravity="center">
 
 
@@ -134,7 +162,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Meal"
+            android:text="Meal:"
             android:textSize="@dimen/title_text_size" />
 
         <androidx.appcompat.widget.AppCompatSpinner
@@ -144,8 +172,7 @@
             android:layout_marginStart="15dp"
             android:layout_weight="1"
             android:entries="@array/mealItems"
-
-            />
+            android:scrollbarSize="25dp" />
     </LinearLayout>
 
 
@@ -156,7 +183,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/add_LAY_meal"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:gravity="center">
 
 
@@ -165,7 +192,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Time"
+            android:text="Start Time:"
             android:textSize="@dimen/title_text_size" />
 
         <androidx.appcompat.widget.AppCompatSpinner
@@ -175,17 +202,18 @@
             android:layout_marginStart="30dp"
             android:layout_weight="1"
             android:entries="@array/hourItems"
+            android:scrollbarSize="25dp"
             />
 
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_marginStart="15dp"
-            android:textSize="@dimen/data_text_size"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text=":"/>
+            android:text=":"
+            android:textSize="@dimen/data_text_size" />
 
 
         <androidx.appcompat.widget.AppCompatSpinner
@@ -195,8 +223,47 @@
             android:layout_marginStart="15dp"
             android:layout_weight="1"
             android:entries="@array/minuteItems"
+            android:scrollbarSize="25dp"
+            />
+    </LinearLayout>
+
+
+    <!--    Before Or After Meal -->
+    <LinearLayout
+        android:id="@+id/add_LAY_frequency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_LAY_time"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center">
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Frequency:"
+            android:textSize="@dimen/title_text_size" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/add_SPN_frequency"
+            android:layout_width="75dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="15dp"
+            android:scrollbarSize="25dp"
+            android:entries="@array/quantityItems"
 
             />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Times A Day"
+            android:textSize="@dimen/title_text_size" />
     </LinearLayout>
 
 
@@ -204,9 +271,9 @@
         android:id="@+id/add_BTN_add"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_below="@id/add_LAY_time"
+        android:layout_below="@id/add_LAY_frequency"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:backgroundTint="@color/green_500"
         android:text="V"
         android:textSize="60dp" />
