@@ -96,7 +96,7 @@ public class Prescription implements Comparable<Prescription> {
     }
 
     public String getTime() {
-        return hour + ":" + minute;
+        return hour + ":" + String.format("%02d",minute);
     }
 
 

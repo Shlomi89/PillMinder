@@ -3,6 +3,7 @@ package com.example.pillminderapp.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,18 +11,26 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
+import com.example.pillminderapp.Adapters.LocalDateAdapter;
+import com.example.pillminderapp.Model.Cabinet;
 import com.example.pillminderapp.Model.Pill;
 import com.example.pillminderapp.Model.Prescription;
 import com.example.pillminderapp.R;
 import com.example.pillminderapp.Utilities.DataManager;
 import com.example.pillminderapp.Utilities.ImageLoader;
+import com.example.pillminderapp.Utilities.SharedPreferencesManager;
+import com.example.pillminderapp.Utilities.SignalManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.checkbox.MaterialCheckBox;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class AddNewPillActivity extends AppCompatActivity {
@@ -39,6 +48,13 @@ public class AddNewPillActivity extends AppCompatActivity {
     private AppCompatSpinner add_SPN_hour;
     private AppCompatSpinner add_SPN_minute;
     private AppCompatSpinner add_SPN_frequency;
+
+    private Cabinet cabinet = DataManager.getCabinet();
+    private ExtendedFloatingActionButton add_BTN_back;
+
+    private String imgURL="";
+
+    public static final String PRESCRIPTION = "PRESCRIPTION";
 
 
     @Override
@@ -60,44 +76,67 @@ public class AddNewPillActivity extends AppCompatActivity {
 
 
         add_BTN_add.setOnClickListener(v-> addPrescription());
-
+        add_BTN_back.setOnClickListener(v-> changeActivity());
 
     }
 
+    private void changeActivity() {
+        Intent menuIntent = new Intent(this, MenuActivity.class);
+        startActivity(menuIntent);
+    }
+
+    public boolean checkfields(){
+        return !add_TXT_name.getText().toString().isEmpty() && !add_TXT_duration.getText().toString().isEmpty();
+    }
+
+
+
     private void addPrescription() {
-        double decimalHours =  24 / Double.parseDouble(add_SPN_frequency.getSelectedItem().toString());
+        if (checkfields()) {
+            double decimalHours = 24 / Double.parseDouble(add_SPN_frequency.getSelectedItem().toString());
 
-        int addhour = (int) decimalHours;
-        int addminute = (int) ((decimalHours - addhour) * 60);
-
-
-        int hour = Integer.parseInt(add_SPN_hour.getSelectedItem().toString());
-        int minute = Integer.parseInt(add_SPN_minute.getSelectedItem().toString());
-        for (int i =0; i<Integer.parseInt(add_SPN_frequency.getSelectedItem().toString()); i++) {
-//        Prescription prescription = new Prescription(add_TXT_name.getText().toString(),add_SPN_meal.getSelectedItemPosition(),Integer.parseInt(add_SPN_quantity.getSelectedItem().toString()),"",Integer.parseInt(add_SPN_hour.getSelectedItem().toString()),Integer.parseInt(add_SPN_minute.getSelectedItem().toString()),add_CHK_permanent ? );
-
-            Prescription prescription = new Prescription();
-            prescription.setName(add_TXT_name.getText().toString());
-            prescription.setQuantity(Integer.parseInt(add_SPN_quantity.getSelectedItem().toString()));
-            prescription.setAfterMeal(add_SPN_meal.getSelectedItemPosition());
-            if (add_CHK_permanent.isChecked()) {
-                prescription.setEndDate(-1);
-            } else {
-                prescription.setEndDate(Integer.parseInt(add_TXT_duration.getText().toString()));
+            int addhour = (int) decimalHours;
+            int addminute = (int) ((decimalHours - addhour) * 60);
+            int hour = Integer.parseInt(add_SPN_hour.getSelectedItem().toString());
+            int minute = Integer.parseInt(add_SPN_minute.getSelectedItem().toString());
+            for (int i = 0; i < Integer.parseInt(add_SPN_frequency.getSelectedItem().toString()); i++) {
+                Prescription prescription = new Prescription(add_TXT_name.getText().toString(), //Name
+                        add_SPN_meal.getSelectedItemPosition(), //Before\After Meal
+                        Integer.parseInt(add_SPN_quantity.getSelectedItem().toString()), // Quantity
+                        imgURL, // IMG
+                        hour, // Hour
+                        minute, // Minute
+                        add_CHK_permanent.isChecked() ? -1 : Integer.parseInt(add_TXT_duration.getText().toString())); // Duration
+//            Prescription prescription = new Prescription();
+//            prescription.setName(add_TXT_name.getText().toString());
+//            prescription.setQuantity(Integer.parseInt(add_SPN_quantity.getSelectedItem().toString()));
+//            prescription.setAfterMeal(add_SPN_meal.getSelectedItemPosition());
+//            if (add_CHK_permanent.isChecked()) {
+//                prescription.setEndDate(-1);
+//            } else {
+//                prescription.setEndDate(Integer.parseInt(add_TXT_duration.getText().toString()));
+//            }
+//            prescription.setHour(hour);
+//            prescription.setMinute(minute);
+                Log.d("Pres", prescription.toString());
+                hour += addhour;
+                if (hour >= 24)
+                    hour = hour - 24;
+                minute += addminute;
+                if (minute >= 60)
+                    minute = minute - 60;
+                cabinet.addNewPrescription(prescription);
             }
 
-            prescription.setHour(hour);
-            prescription.setMinute(minute);
-            Log.d("Pres", prescription.toString());
-            hour += addhour;
-            if (hour > 24)
-                hour = hour-24;
-            minute += addminute;
-            if (minute > 60)
-                minute = minute-60;
-
-
+            Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class,new LocalDateAdapter())
+                    .create();
+            SharedPreferencesManager.getInstance().putString(PRESCRIPTION, gson.toJson(cabinet));
+            Log.d("Pres", cabinet.toString());
+            SignalManager.getInstance().toast(add_TXT_name.getText().toString() + " Added Successfully");
+            changeActivity();
         }
+        else
+            SignalManager.getInstance().toast("Please Fill All Fields");
     }
 
 
@@ -123,10 +162,12 @@ public class AddNewPillActivity extends AppCompatActivity {
                         DataManager.hardPills()) {
                     if (add_TXT_name.getText().toString().matches(p.getName())) {
                         ImageLoader.getInstance().load(p.getImgURL(), add_IMG_pill);
+                        imgURL = p.getImgURL();
                         break;
-                    } else
+                    } else {
                         ImageLoader.getInstance().load("https://www.clalit.co.il/he/new_article_images/medical/drugs/183828247/medium.jpg", add_IMG_pill);
-
+                        imgURL = p.getImgURL();
+                    }
                 }
             }
 
@@ -142,6 +183,7 @@ public class AddNewPillActivity extends AppCompatActivity {
 
     private void findViews() {
         add_BTN_add = findViewById(R.id.add_BTN_add);
+        add_BTN_back = findViewById(R.id.add_BTN_back);
         add_TXT_name = findViewById(R.id.add_TXT_name);
         add_IMG_pill = findViewById(R.id.add_IMG_pill);
         add_SPN_quantity = findViewById(R.id.add_SPN_quantity);
@@ -152,5 +194,6 @@ public class AddNewPillActivity extends AppCompatActivity {
         add_SPN_hour = findViewById(R.id.add_SPN_hour);
         add_SPN_minute = findViewById(R.id.add_SPN_minute);
         add_SPN_frequency = findViewById(R.id.add_SPN_frequency);
+
     }
 }

@@ -119,7 +119,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/pill_LBL_name"
                 android:layout_alignEnd="@id/pill_LBL_name"
-                android:layout_marginTop="@dimen/data_end_margin"
                 android:maxLines="1"
                 android:minLines="1"
                 android:textSize="@dimen/time_text_size"
@@ -152,6 +151,20 @@
                 android:minLines="1"
                 android:textSize="@dimen/data_text_size"
                 tools:text="Quantity" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/pill_LBL_daysLeft"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pill_LBL_quantity"
+                android:layout_alignStart="@id/pill_LBL_name"
+                android:layout_marginTop="@dimen/data_end_margin"
+                android:layout_marginEnd="@dimen/data_end_margin"
+                android:maxLines="1"
+                android:minLines="1"
+                android:textSize="@dimen/data_text_size"
+                tools:text="Time Left" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>

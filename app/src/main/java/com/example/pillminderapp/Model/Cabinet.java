@@ -8,10 +8,14 @@ public class Cabinet {
     ArrayList<Prescription> prescriptions = new ArrayList<>();
 
 
-    public ArrayList<Prescription> getPills() {
+    public ArrayList<Prescription> getPrescriptions() {
         return prescriptions;
     }
 
+
+    public void setPrescriptions(ArrayList<Prescription> prescriptions) {
+        this.prescriptions = prescriptions;
+    }
 
     public void addNewPrescription(Prescription prescription) {
         prescriptions.add(prescription);
@@ -19,4 +23,11 @@ public class Cabinet {
     }
 
 
+
+    @Override
+    public String toString() {
+        return "Cabinet{" +
+                "prescriptions=" + prescriptions +
+                '}';
+    }
 }

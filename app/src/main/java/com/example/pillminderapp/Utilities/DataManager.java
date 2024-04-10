@@ -1,16 +1,20 @@
 package com.example.pillminderapp.Utilities;
 
+import com.example.pillminderapp.Adapters.LocalDateAdapter;
 import com.example.pillminderapp.Model.Cabinet;
 import com.example.pillminderapp.Model.Pill;
 import com.example.pillminderapp.Model.Prescription;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class DataManager {
     public static Cabinet getCabinet(){
-        Cabinet cab= (Cabinet) new Gson().fromJson(SharedPreferencesManager.getInstance().getString("LEADERBOARD", ""), Cabinet.class);
-        if (cab.getPills().get(0) == null) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalDate.class,new LocalDateAdapter()).create();
+        Cabinet cab= (Cabinet) gson.fromJson(SharedPreferencesManager.getInstance().getString("PRESCRIPTION", ""), Cabinet.class);
+        if (cab == null) {
             cab= new Cabinet();
         }
         return cab;

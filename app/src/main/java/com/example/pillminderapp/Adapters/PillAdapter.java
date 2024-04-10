@@ -18,6 +18,8 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder> {
@@ -33,9 +35,9 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder
         this.removeCallback = removeCallback;
     }
 
-    public PillAdapter(Context context, Cabinet pills) {
+    public PillAdapter(Context context, Cabinet cabinet) {
         this.context = context;
-        this.prescriptions = pills.getPills();
+        this.prescriptions = cabinet.getPrescriptions();
     }
 
     private Prescription getItem(int position) {
@@ -53,11 +55,17 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder
     @Override
     public void onBindViewHolder(@NonNull PillAdapter.PillViewHolder holder, int position) {
         Prescription prescription = getItem(position);
-        ImageLoader.getInstance().load(prescription.getImgURL(),holder.pill_IMG_poster);
+        ImageLoader.getInstance().load(prescription.getImgURL(), holder.pill_IMG_poster);
         holder.pill_LBL_name.setText(prescription.getName());
         holder.pill_LBL_isMeal.setText(prescription.getMeal());
-        holder.pill_LBL_quantity.setText("" + prescription.getQuantity());
+        holder.pill_LBL_quantity.setText("Quantity: " + prescription.getQuantity());
         holder.pill_LBL_time.setText(String.valueOf(prescription.getTime()));
+        if (prescription.getEndDate().getYear() == 1970)
+            holder.pill_LBL_daysLeft.setText("Permanent");
+        else {
+            Long dayDiff = ChronoUnit.DAYS.between(LocalDate.now(), prescription.getEndDate());
+            holder.pill_LBL_daysLeft.setText("Days Left: " + dayDiff);
+        }
 
     }
 
@@ -79,6 +87,9 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder
 
         private MaterialButton pill_BTN_remove;
 
+        private MaterialTextView pill_LBL_daysLeft;
+
+
         public PillViewHolder(@NonNull View itemView) {
 
             super(itemView);
@@ -89,9 +100,10 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder
             pill_LBL_quantity = itemView.findViewById(R.id.pill_LBL_quantity);
             pill_CARD_data = itemView.findViewById(R.id.pill_CARD_data);
             pill_IMG_poster = itemView.findViewById(R.id.pill_IMG_poster);
+            pill_LBL_daysLeft = itemView.findViewById(R.id.pill_LBL_daysLeft);
             pill_BTN_remove = itemView.findViewById(R.id.pill_BTN_remove);
-            pill_BTN_remove.setOnClickListener(v->{
-                    removeCallback.removePill(prescriptions,getAdapterPosition());
+            pill_BTN_remove.setOnClickListener(v -> {
+                removeCallback.removePill(prescriptions, getAdapterPosition());
             });
         }
     }

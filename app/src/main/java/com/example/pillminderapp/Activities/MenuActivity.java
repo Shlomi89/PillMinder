@@ -14,7 +14,9 @@ import com.example.pillminderapp.Model.Cabinet;
 import com.example.pillminderapp.Model.Prescription;
 import com.example.pillminderapp.R;
 import com.example.pillminderapp.Utilities.DataManager;
+import com.example.pillminderapp.Utilities.SharedPreferencesManager;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -23,7 +25,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private RecyclerView recyclerview_list_pills;
     private ExtendedFloatingActionButton menu_BTN_add;
-
+    private  Cabinet cabinet = DataManager.getCabinet();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +44,8 @@ public class MenuActivity extends AppCompatActivity {
 
 
     private void initViews() {
-       Cabinet pills = DataManager.hardCab();
-       Log.d("Pills",pills.toString());
-        PillAdapter pillAdapter = new PillAdapter(this,pills);
+       Log.d("Pills",cabinet.toString());
+        PillAdapter pillAdapter = new PillAdapter(this,cabinet);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerview_list_pills.setLayoutManager(linearLayoutManager);
@@ -54,6 +55,8 @@ public class MenuActivity extends AppCompatActivity {
             public void removePill(ArrayList<Prescription> prescriptions, int position) {
                 String nameOfpill = prescriptions.get(position).getName();
                 prescriptions.removeIf(p -> p.getName().matches(nameOfpill));
+                cabinet.setPrescriptions(prescriptions);
+                SharedPreferencesManager.getInstance().putString("PRESCRIPTION", new Gson().toJson(cabinet));
                 recyclerview_list_pills.getAdapter().notifyDataSetChanged();
 
 //                pills.remove(position);
