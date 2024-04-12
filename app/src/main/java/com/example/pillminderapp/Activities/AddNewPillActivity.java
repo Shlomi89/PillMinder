@@ -1,5 +1,6 @@
 package com.example.pillminderapp.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 
@@ -27,11 +28,19 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AddNewPillActivity extends AppCompatActivity {
 
@@ -49,7 +58,7 @@ public class AddNewPillActivity extends AppCompatActivity {
     private AppCompatSpinner add_SPN_minute;
     private AppCompatSpinner add_SPN_frequency;
 
-    private Cabinet cabinet = DataManager.getCabinet();
+    private Cabinet cabinet = new Cabinet();
     private ExtendedFloatingActionButton add_BTN_back;
 
     private String imgURL="";
@@ -62,19 +71,20 @@ public class AddNewPillActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_pill);
         findViews();
+        cabinetFromDB();
         pillTextListener();
         add_CHK_permanent.setOnClickListener(v -> {
             if (((MaterialCheckBox) v).isChecked()){
                 add_TXT_duration.setEnabled(false);
+                add_TXT_duration.setVisibility(View.INVISIBLE);
                 add_TXTVIEW_duration.setVisibility(View.INVISIBLE);
             }
             else {
                 add_TXT_duration.setEnabled(true);
+                add_TXT_duration.setVisibility(View.VISIBLE);
                 add_TXTVIEW_duration.setVisibility(View.VISIBLE);
             }
         });
-
-
         add_BTN_add.setOnClickListener(v-> addPrescription());
         add_BTN_back.setOnClickListener(v-> changeActivity());
 
@@ -85,11 +95,17 @@ public class AddNewPillActivity extends AppCompatActivity {
         startActivity(menuIntent);
     }
 
-    public boolean checkfields(){
-        return !add_TXT_name.getText().toString().isEmpty() && !add_TXT_duration.getText().toString().isEmpty();
+    private boolean checkfields(){
+
+        if (add_CHK_permanent.isChecked()){
+            if (!add_TXT_name.getText().toString().isEmpty())
+                return true;
+        }
+        else {
+            return !add_TXT_name.getText().toString().isEmpty() && !add_TXT_duration.getText().toString().isEmpty();
+        }
+        return true;
     }
-
-
 
     private void addPrescription() {
         if (checkfields()) {
@@ -106,18 +122,7 @@ public class AddNewPillActivity extends AppCompatActivity {
                         imgURL, // IMG
                         hour, // Hour
                         minute, // Minute
-                        add_CHK_permanent.isChecked() ? -1 : Integer.parseInt(add_TXT_duration.getText().toString())); // Duration
-//            Prescription prescription = new Prescription();
-//            prescription.setName(add_TXT_name.getText().toString());
-//            prescription.setQuantity(Integer.parseInt(add_SPN_quantity.getSelectedItem().toString()));
-//            prescription.setAfterMeal(add_SPN_meal.getSelectedItemPosition());
-//            if (add_CHK_permanent.isChecked()) {
-//                prescription.setEndDate(-1);
-//            } else {
-//                prescription.setEndDate(Integer.parseInt(add_TXT_duration.getText().toString()));
-//            }
-//            prescription.setHour(hour);
-//            prescription.setMinute(minute);
+                        add_CHK_permanent.isChecked() ? -1 : LocalDate.now().plusDays(Integer.parseInt(add_TXT_duration.getText().toString())).toEpochDay()); // Duration
                 Log.d("Pres", prescription.toString());
                 hour += addhour;
                 if (hour >= 24)
@@ -127,10 +132,16 @@ public class AddNewPillActivity extends AppCompatActivity {
                     minute = minute - 60;
                 cabinet.addNewPrescription(prescription);
             }
+            //Add To Db / SharedPref
 
-            Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class,new LocalDateAdapter())
-                    .create();
-            SharedPreferencesManager.getInstance().putString(PRESCRIPTION, gson.toJson(cabinet));
+            //Shared Pref
+//            Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class,new LocalDateAdapter())
+//                    .create();
+//            SharedPreferencesManager.getInstance().putString(PRESCRIPTION, gson.toJson(cabinet));
+            //DB
+            FirebaseDatabase db = FirebaseDatabase.getInstance();
+            DatabaseReference ref = db.getReference(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            ref.setValue(cabinet);
             Log.d("Pres", cabinet.toString());
             SignalManager.getInstance().toast(add_TXT_name.getText().toString() + " Added Successfully");
             changeActivity();
@@ -179,6 +190,27 @@ public class AddNewPillActivity extends AppCompatActivity {
 
 
         add_TXT_name.addTextChangedListener(textWatcher);
+    }
+
+
+    public void cabinetFromDB() {
+        FirebaseDatabase.getInstance().getReference(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Prescription> prescriptions = new ArrayList<>();
+                for (DataSnapshot prescriptionSnapshot : snapshot.child("prescriptions").getChildren()) {
+                    Prescription prescription = prescriptionSnapshot.getValue(Prescription.class);
+                    prescriptions.add(prescription);
+                }
+                cabinet.setPrescriptions(prescriptions);
+                Log.d("CabFromDB",cabinet.toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void findViews() {

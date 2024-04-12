@@ -9,11 +9,8 @@ public class Prescription implements Comparable<Prescription> {
     private String name;
     private int isAfterMeal;
     private int quantity;
-
     private String imgURL;
-
-    private LocalDate endDate;
-
+    private Long endDaysDate;
     private int hour;
     private int minute;
 
@@ -21,18 +18,14 @@ public class Prescription implements Comparable<Prescription> {
     public Prescription() {
     }
 
-    public Prescription(String name, int isAfterMeal, int quantity, String imgURL, int hour, int minute, int duration) {
+    public Prescription(String name, int isAfterMeal, int quantity, String imgURL, int hour, int minute, long endDaysDate) {
         this.name = name;
         this.isAfterMeal = isAfterMeal;
         this.quantity = quantity;
         this.imgURL = imgURL;
         this.hour = hour;
         this.minute = minute;
-        if (duration != -1)
-            this.endDate = LocalDate.now().plusDays(duration);
-        else
-            this.endDate = LocalDate.of(1970, 1, 1);
-
+        this.endDaysDate = endDaysDate;
     }
 
     public String getName() {
@@ -84,16 +77,15 @@ public class Prescription implements Comparable<Prescription> {
     }
 
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public long getEndDaysDate() {
+        return endDaysDate;
     }
 
-    public void setEndDate(int duration) {
-        if (duration == -1)
-            this.endDate = LocalDate.of(1970, 1, 1);
-        else
-            this.endDate = LocalDate.now().plusDays(duration);
+    public void setEndDate(long endDaysDate) {
+        this.endDaysDate = endDaysDate;
     }
+
+
 
     public String getTime() {
         return hour + ":" + String.format("%02d",minute);
@@ -130,7 +122,7 @@ public class Prescription implements Comparable<Prescription> {
                 ", isAfterMeal=" + isAfterMeal +
                 ", quantity=" + quantity +
                 ", imgURL='" + imgURL + '\'' +
-                ", endDate=" + endDate +
+                ", endDateDays=" + endDaysDate +
                 ", hour=" + hour +
                 ", minute=" + minute +
                 '}';

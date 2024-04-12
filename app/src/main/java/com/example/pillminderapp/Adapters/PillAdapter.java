@@ -19,7 +19,6 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder> {
@@ -60,13 +59,12 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder
         holder.pill_LBL_isMeal.setText(prescription.getMeal());
         holder.pill_LBL_quantity.setText("Quantity: " + prescription.getQuantity());
         holder.pill_LBL_time.setText(String.valueOf(prescription.getTime()));
-        if (prescription.getEndDate().getYear() == 1970)
+        if (prescription.getEndDaysDate() == -1)
             holder.pill_LBL_daysLeft.setText("Permanent");
         else {
-            Long dayDiff = ChronoUnit.DAYS.between(LocalDate.now(), prescription.getEndDate());
+            long dayDiff = prescription.getEndDaysDate() - LocalDate.now().toEpochDay() ;
             holder.pill_LBL_daysLeft.setText("Days Left: " + dayDiff);
         }
-
     }
 
     @Override

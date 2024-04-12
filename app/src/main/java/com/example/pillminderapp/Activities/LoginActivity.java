@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         if (user == null)
             login();
         else {
+            changeActivity();
             String uid = user.getUid();
             String phone = user.getPhoneNumber();
             String name = user.getDisplayName();
@@ -77,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         signInLauncher.launch(signInIntent);
-        finish();
     }
 
     // See: https://developer.android.com/training/basics/intents/result
@@ -96,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         if (result.getResultCode() == RESULT_OK) {
             // Successfully signed in
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            changeActivity();
             // ...
         } else {
             // Sign in failed. If response is null the user canceled the
@@ -103,5 +104,11 @@ public class LoginActivity extends AppCompatActivity {
             // response.getError().getErrorCode() and handle the error.
             // ...
         }
+    }
+
+    private void changeActivity() {
+        Intent menuIntent = new Intent(this, MenuActivity.class);
+        startActivity(menuIntent);
+        finish();
     }
 }

@@ -18,45 +18,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <!--            android:background="@drawable/background"-->
-            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:backgroundTint="@color/blue_500"
-                android:text="+"
-                android:textSize="30sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:textAlignment="center"
-
-                android:textColor="@color/white"/>
             <LinearLayout
                 android:id="@+id/headline_LAY_menu"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:orientation="horizontal">
+
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/logo_IMG_menu"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 </com.google.android.material.imageview.ShapeableImageView>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/menu_BTN_logout"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/red"
+                    android:layout_gravity="center"
+                    android:text="Logout"
+                    />
             </LinearLayout>
-            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/menu_BTN_add"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:backgroundTint="@color/blue_500"
-                android:text="+"
-                android:textSize="30sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:textAlignment="center"
 
-                android:textColor="@color/white"/>
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -66,6 +51,23 @@
                 android:layout_below="@id/headline_LAY_menu"
                 android:layout_marginTop="10dp"
                 tools:listitem="@layout/pill_item" />
+
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/menu_BTN_add"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="30dp"
+                android:layout_alignParentRight="true"
+                android:backgroundTint="@color/blue_500"
+                android:text="+"
+                android:textSize="30sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:textAlignment="center"
+
+                android:textColor="@color/white"/>
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
