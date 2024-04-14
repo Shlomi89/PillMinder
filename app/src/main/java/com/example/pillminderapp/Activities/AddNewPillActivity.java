@@ -86,14 +86,11 @@ public class AddNewPillActivity extends AppCompatActivity {
             }
         });
         add_BTN_add.setOnClickListener(v-> addPrescription());
-        add_BTN_back.setOnClickListener(v-> changeActivity());
+//        add_BTN_back.setOnClickListener(v-> changeActivity());
 
     }
 
-    private void changeActivity() {
-        Intent menuIntent = new Intent(this, MenuActivity.class);
-        startActivity(menuIntent);
-    }
+
 
     private boolean checkfields(){
 
@@ -110,7 +107,6 @@ public class AddNewPillActivity extends AppCompatActivity {
     private void addPrescription() {
         if (checkfields()) {
             double decimalHours = 24 / Double.parseDouble(add_SPN_frequency.getSelectedItem().toString());
-
             int addhour = (int) decimalHours;
             int addminute = (int) ((decimalHours - addhour) * 60);
             int hour = Integer.parseInt(add_SPN_hour.getSelectedItem().toString());
@@ -144,7 +140,7 @@ public class AddNewPillActivity extends AppCompatActivity {
             ref.setValue(cabinet);
             Log.d("Pres", cabinet.toString());
             SignalManager.getInstance().toast(add_TXT_name.getText().toString() + " Added Successfully");
-            changeActivity();
+            finish();
         }
         else
             SignalManager.getInstance().toast("Please Fill All Fields");
@@ -215,7 +211,7 @@ public class AddNewPillActivity extends AppCompatActivity {
 
     private void findViews() {
         add_BTN_add = findViewById(R.id.add_BTN_add);
-        add_BTN_back = findViewById(R.id.add_BTN_back);
+//        add_BTN_back = findViewById(R.id.add_BTN_back);
         add_TXT_name = findViewById(R.id.add_TXT_name);
         add_IMG_pill = findViewById(R.id.add_IMG_pill);
         add_SPN_quantity = findViewById(R.id.add_SPN_quantity);

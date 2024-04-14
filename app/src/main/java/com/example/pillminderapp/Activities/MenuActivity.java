@@ -1,10 +1,12 @@
 package com.example.pillminderapp.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +15,9 @@ import com.example.pillminderapp.Adapters.PillAdapter;
 import com.example.pillminderapp.Interfaces.RemoveCallback;
 import com.example.pillminderapp.Model.Cabinet;
 import com.example.pillminderapp.Model.Prescription;
+import com.example.pillminderapp.Notifilication.NotificationHelper;
 import com.example.pillminderapp.R;
-import com.example.pillminderapp.Utilities.DataManager;
-import com.example.pillminderapp.Utilities.SharedPreferencesManager;
+import com.example.pillminderapp.Utilities.AlarmUtils;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,11 +29,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class MenuActivity extends AppCompatActivity {
@@ -46,6 +45,7 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
         cabinetFromDB();
         findViews();
         menu_BTN_add.setOnClickListener(view -> changeActivity());
@@ -65,7 +65,7 @@ public class MenuActivity extends AppCompatActivity {
 
 
     public void cabinetFromDB() {
-        FirebaseDatabase.getInstance().getReference(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<Prescription> prescriptions = new ArrayList<>();
@@ -76,6 +76,7 @@ public class MenuActivity extends AppCompatActivity {
                 cabinet.setPrescriptions(prescriptions);
                 Log.d("CabFromDB",cabinet.toString());
                 initViews();
+//                updateAlarms();
             }
 
             @Override
@@ -92,7 +93,19 @@ public class MenuActivity extends AppCompatActivity {
                     .signOut(this)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         public void onComplete(@NonNull Task<Void> task) {
-                            changeLoginActivity();
+                            AlertDialog.Builder builder =  new AlertDialog.Builder(MenuActivity.this);
+                            // Set the message show for the Alert time
+                            builder.setMessage("Are you sure you want to Logout?" );
+                            builder.setTitle("Logout");
+                            builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
+                                changeLoginActivity();
+                            });
+                            builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
+                                // If user click no then dialog box is canceled.
+                                dialog.cancel();
+                            });
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
                         }
                     });
         });
@@ -105,24 +118,33 @@ public class MenuActivity extends AppCompatActivity {
         pillAdapter.setRemoveCallback(new RemoveCallback() {
             @Override
             public void removePill(ArrayList<Prescription> prescriptions, int position) {
-                String nameOfpill = prescriptions.get(position).getName();
-                prescriptions.removeIf(p -> p.getName().matches(nameOfpill));
-                cabinet.setPrescriptions(prescriptions);
-                FirebaseDatabase db = FirebaseDatabase.getInstance();
-                DatabaseReference ref = db.getReference(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                ref.setValue(cabinet);
-//                SharedPreferencesManager.getInstance().putString("PRESCRIPTION", new Gson().toJson(cabinet));
-                recyclerview_list_pills.getAdapter().notifyDataSetChanged();
+                AlertDialog.Builder builder =  new AlertDialog.Builder(MenuActivity.this);
+                // Set the message show for the Alert time
+                builder.setMessage("Are you sure you want to delete?" );
+                // Set Alert Title
+                builder.setTitle("Delete "+ prescriptions.get(position).getName());
+                builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
+                    String nameOfpill = prescriptions.get(position).getName();
+                    prescriptions.removeIf(p -> p.getName().matches(nameOfpill));
+                    cabinet.setPrescriptions(prescriptions);
+                    FirebaseDatabase db = FirebaseDatabase.getInstance();
+                    DatabaseReference ref = db.getReference(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    ref.setValue(cabinet);
+//                  SharedPreferencesManager.getInstance().putString("PRESCRIPTION", new Gson().toJson(cabinet));
+                    recyclerview_list_pills.getAdapter().notifyDataSetChanged();
 
 //                pills.remove(position);
 //                recyclerview_list_pills.getAdapter().notifyItemRemoved(position);
-            }
+
+                });
+                builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
+                    dialog.cancel();
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                        }
         });
     }
-
-
-
-
 
     private void findViews() {
         recyclerview_list_pills = findViewById(R.id.recyclerview_list_pills);
@@ -130,4 +152,8 @@ public class MenuActivity extends AppCompatActivity {
         menu_BTN_logout = findViewById(R.id.menu_BTN_logout);
     }
 
+    private void updateAlarms() {
+        NotificationHelper.createNotificationChannel(this);
+        AlarmUtils.updateAlarms(this, cabinet.getPrescriptions());
+    }
 }

@@ -10,22 +10,23 @@
     <LinearLayout
         android:id="@+id/headline_LAY_menu"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="horizontal">
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/add_BTN_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:gravity="center"
-            android:text="Back" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/logo_IMG_menu"
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.google.android.material.imageview.ShapeableImageView>
+            android:layout_height="match_parent"
+            android:text="Add New Pill"
+            android:layout_gravity="center"
+            android:gravity=""
+            android:textSize="300sp"
+            android:autoSizeTextType="uniform"
+
+            android:layout_weight="1"/>
     </LinearLayout>
 
 
@@ -141,8 +142,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
-            android:textSize="20sp"
-            android:text="Permanent"/>
+            android:text="Permanent"
+            android:textSize="20sp" />
     </LinearLayout>
 
 
@@ -202,8 +203,7 @@
             android:layout_marginStart="30dp"
             android:layout_weight="1"
             android:entries="@array/hourItems"
-            android:scrollbarSize="25dp"
-            />
+            android:scrollbarSize="25dp" />
 
 
         <com.google.android.material.textview.MaterialTextView
@@ -223,8 +223,7 @@
             android:layout_marginStart="15dp"
             android:layout_weight="1"
             android:entries="@array/minuteItems"
-            android:scrollbarSize="25dp"
-            />
+            android:scrollbarSize="25dp" />
     </LinearLayout>
 
 
@@ -252,8 +251,8 @@
             android:layout_width="75dp"
             android:layout_height="50dp"
             android:layout_marginStart="15dp"
-            android:scrollbarSize="25dp"
             android:entries="@array/quantityItems"
+            android:scrollbarSize="25dp"
 
             />
 
@@ -275,6 +274,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/green_500"
-        android:text="V"
-        android:textSize="60dp" />
+        app:icon="@drawable/outline_assignment_turned_in_24"
+        app:iconGravity="textTop"
+        app:iconSize="70dp"
+        />
 </RelativeLayout>
