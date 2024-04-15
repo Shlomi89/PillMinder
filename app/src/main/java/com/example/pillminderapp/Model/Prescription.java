@@ -1,14 +1,11 @@
 package com.example.pillminderapp.Model;
 
 import androidx.annotation.NonNull;
-
-import java.time.LocalDate;
-
-
 public class Prescription implements Comparable<Prescription> {
     private String name;
     private int isAfterMeal;
     private int quantity;
+    private String description;
     private String imgURL;
     private Long endDaysDate;
     private int hour;
@@ -18,8 +15,9 @@ public class Prescription implements Comparable<Prescription> {
     public Prescription() {
     }
 
-    public Prescription(String name, int isAfterMeal, int quantity, String imgURL, int hour, int minute, long endDaysDate) {
+    public Prescription(String name,String description ,int isAfterMeal, int quantity, String imgURL, int hour, int minute, long endDaysDate) {
         this.name = name;
+        this.description = description;
         this.isAfterMeal = isAfterMeal;
         this.quantity = quantity;
         this.imgURL = imgURL;
@@ -46,6 +44,14 @@ public class Prescription implements Comparable<Prescription> {
 
     public String getImgURL() {
         return imgURL;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setImgURL(String imgURL) {

@@ -5,15 +5,20 @@ public class Pill {
     private String ImgURL;
     private String description;
 
+    public Pill() {
+    }
 
-    public Pill(String name, String imgURL) {
+    public Pill(String name, String description, String imgURL) {
         this.name = name;
-        ImgURL = imgURL;
+        this.description = description;
+        this.ImgURL = imgURL;
     }
 
     public String getName() {
         return name;
     }
+
+
 
     public void setName(String name) {
         this.name = name;
@@ -22,6 +27,7 @@ public class Pill {
     public String getImgURL() {
         return ImgURL;
     }
+
 
     public void setImgURL(String imgURL) {
         ImgURL = imgURL;

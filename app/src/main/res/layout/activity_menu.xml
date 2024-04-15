@@ -6,56 +6,66 @@
     android:layout_height="match_parent"
     tools:context=".Activities.MenuActivity">
 
+    <LinearLayout
+        android:id="@+id/headline_LAY_menu"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="My Meds"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="300sp"
+            android:autoSizeTextType="uniform"
+            android:layout_weight="1">
+
+        </com.google.android.material.textview.MaterialTextView>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/menu_BTN_logout"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/red"
+
+            android:text="Logout"
+            />
+    </LinearLayout>
+
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
         app:cardElevation="22dp"
+        android:layout_below="@id/headline_LAY_menu"
         android:backgroundTint="@color/white">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <!--            android:background="@drawable/background"-->
-            <LinearLayout
-                android:id="@+id/headline_LAY_menu"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:orientation="horizontal">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="My Meds"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textSize="300sp"
-                    android:autoSizeTextType="uniform"
-                    android:layout_weight="1">
-
-                </com.google.android.material.textview.MaterialTextView>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/menu_BTN_logout"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/red"
-
-                    android:text="Logout"
-                    />
-            </LinearLayout>
 
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_list_pills"
+                android:id="@+id/menu_RYC_medList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/headline_LAY_menu"
                 android:layout_marginTop="10dp"
                 tools:listitem="@layout/pill_item" />
-
+            <!--progressbar for displaying
+                our loading indicator-->
+            <ProgressBar
+                android:id="@+id/idLoadingPB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="visible" />
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/menu_BTN_add"

@@ -57,6 +57,7 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder
         ImageLoader.getInstance().load(prescription.getImgURL(), holder.pill_IMG_poster);
         holder.pill_LBL_name.setText(prescription.getName());
         holder.pill_LBL_isMeal.setText(prescription.getMeal());
+        holder.pill_LBL_desc.setText(prescription.getDescription());
         holder.pill_LBL_quantity.setText("Quantity: " + prescription.getQuantity());
         holder.pill_LBL_time.setText(String.valueOf(prescription.getTime()));
         if (prescription.getEndDaysDate() == -1)
@@ -100,9 +101,7 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder
             pill_IMG_poster = itemView.findViewById(R.id.pill_IMG_poster);
             pill_LBL_daysLeft = itemView.findViewById(R.id.pill_LBL_daysLeft);
             pill_BTN_remove = itemView.findViewById(R.id.pill_BTN_remove);
-            pill_BTN_remove.setOnClickListener(v -> {
-                removeCallback.removePill(prescriptions, getAdapterPosition());
-            });
+            pill_BTN_remove.setOnClickListener(v -> removeCallback.removePill(prescriptions, getAdapterPosition()));
         }
     }
 }

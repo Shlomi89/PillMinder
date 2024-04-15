@@ -10,6 +10,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.pillminderapp.Adapters.PillAdapter;
 import com.example.pillminderapp.Interfaces.RemoveCallback;
@@ -39,13 +41,13 @@ public class MenuActivity extends AppCompatActivity {
     private RecyclerView recyclerview_list_pills;
     private ExtendedFloatingActionButton menu_BTN_add;
     private MaterialButton menu_BTN_logout;
-    private Cabinet cabinet =new Cabinet();
+    private ProgressBar progressBar;
+    private Cabinet cabinet = new Cabinet();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
         cabinetFromDB();
         findViews();
         menu_BTN_add.setOnClickListener(view -> changeActivity());
@@ -74,7 +76,7 @@ public class MenuActivity extends AppCompatActivity {
                     prescriptions.add(prescription);
                 }
                 cabinet.setPrescriptions(prescriptions);
-                Log.d("CabFromDB",cabinet.toString());
+                Log.d("CabFromDB", cabinet.toString());
                 initViews();
 //                updateAlarms();
             }
@@ -88,26 +90,28 @@ public class MenuActivity extends AppCompatActivity {
 
 
     private void initViews() {
+        progressBar.setVisibility(View.GONE);
         menu_BTN_logout.setOnClickListener(v -> {
-            AuthUI.getInstance()
-                    .signOut(this)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        public void onComplete(@NonNull Task<Void> task) {
-                            AlertDialog.Builder builder =  new AlertDialog.Builder(MenuActivity.this);
-                            // Set the message show for the Alert time
-                            builder.setMessage("Are you sure you want to Logout?" );
-                            builder.setTitle("Logout");
-                            builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
+            // Set the message show for the Alert time
+            builder.setMessage("Are you sure you want to Logout?");
+            builder.setTitle("Logout");
+            builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
+                AuthUI.getInstance()
+                        .signOut(this)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            public void onComplete(@NonNull Task<Void> task) {
                                 changeLoginActivity();
-                            });
-                            builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
-                                // If user click no then dialog box is canceled.
-                                dialog.cancel();
-                            });
-                            AlertDialog alertDialog = builder.create();
-                            alertDialog.show();
-                        }
-                    });
+                            }
+                        });
+            });
+            builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
+                // If user click no then dialog box is canceled.
+                dialog.cancel();
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
         });
         Log.d("Pills", cabinet.toString());
         PillAdapter pillAdapter = new PillAdapter(this, cabinet);
@@ -118,11 +122,11 @@ public class MenuActivity extends AppCompatActivity {
         pillAdapter.setRemoveCallback(new RemoveCallback() {
             @Override
             public void removePill(ArrayList<Prescription> prescriptions, int position) {
-                AlertDialog.Builder builder =  new AlertDialog.Builder(MenuActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
                 // Set the message show for the Alert time
-                builder.setMessage("Are you sure you want to delete?" );
+                builder.setMessage("Are you sure you want to delete?");
                 // Set Alert Title
-                builder.setTitle("Delete "+ prescriptions.get(position).getName());
+                builder.setTitle("Delete " + prescriptions.get(position).getName());
                 builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
                     String nameOfpill = prescriptions.get(position).getName();
                     prescriptions.removeIf(p -> p.getName().matches(nameOfpill));
@@ -142,14 +146,15 @@ public class MenuActivity extends AppCompatActivity {
                 });
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
-                        }
+            }
         });
     }
 
     private void findViews() {
-        recyclerview_list_pills = findViewById(R.id.recyclerview_list_pills);
+        recyclerview_list_pills = findViewById(R.id.menu_RYC_medList);
         menu_BTN_add = findViewById(R.id.menu_BTN_add);
         menu_BTN_logout = findViewById(R.id.menu_BTN_logout);
+        progressBar = findViewById(R.id.idLoadingPB);
     }
 
     private void updateAlarms() {

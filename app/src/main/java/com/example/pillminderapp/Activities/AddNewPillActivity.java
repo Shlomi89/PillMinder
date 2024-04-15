@@ -11,15 +11,11 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-
-import com.example.pillminderapp.Adapters.LocalDateAdapter;
 import com.example.pillminderapp.Model.Cabinet;
 import com.example.pillminderapp.Model.Pill;
 import com.example.pillminderapp.Model.Prescription;
 import com.example.pillminderapp.R;
-import com.example.pillminderapp.Utilities.DataManager;
 import com.example.pillminderapp.Utilities.ImageLoader;
-import com.example.pillminderapp.Utilities.SharedPreferencesManager;
 import com.example.pillminderapp.Utilities.SignalManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.checkbox.MaterialCheckBox;
@@ -29,15 +25,11 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -59,11 +51,11 @@ public class AddNewPillActivity extends AppCompatActivity {
     private AppCompatSpinner add_SPN_frequency;
 
     private Cabinet cabinet = new Cabinet();
-    private ExtendedFloatingActionButton add_BTN_back;
+
+    private ArrayList<Pill> pills = new ArrayList<>();
 
     private String imgURL="";
-
-    public static final String PRESCRIPTION = "PRESCRIPTION";
+    private String description="";
 
 
     @Override
@@ -72,7 +64,7 @@ public class AddNewPillActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_pill);
         findViews();
         cabinetFromDB();
-        pillTextListener();
+        pillsFromDB();
         add_CHK_permanent.setOnClickListener(v -> {
             if (((MaterialCheckBox) v).isChecked()){
                 add_TXT_duration.setEnabled(false);
@@ -86,8 +78,6 @@ public class AddNewPillActivity extends AppCompatActivity {
             }
         });
         add_BTN_add.setOnClickListener(v-> addPrescription());
-//        add_BTN_back.setOnClickListener(v-> changeActivity());
-
     }
 
 
@@ -113,6 +103,7 @@ public class AddNewPillActivity extends AppCompatActivity {
             int minute = Integer.parseInt(add_SPN_minute.getSelectedItem().toString());
             for (int i = 0; i < Integer.parseInt(add_SPN_frequency.getSelectedItem().toString()); i++) {
                 Prescription prescription = new Prescription(add_TXT_name.getText().toString(), //Name
+                        description,
                         add_SPN_meal.getSelectedItemPosition(), //Before\After Meal
                         Integer.parseInt(add_SPN_quantity.getSelectedItem().toString()), // Quantity
                         imgURL, // IMG
@@ -150,10 +141,10 @@ public class AddNewPillActivity extends AppCompatActivity {
     private void pillTextListener(){
         ArrayList<String> names = new ArrayList<>();
         for (Pill p :
-                DataManager.hardPills()) {
+                pills) {
             names.add(p.getName());
         }
-        String[] nameArr = new String[DataManager.hardPills().size()];
+        String[] nameArr = new String[pills.size()];
         nameArr = names.toArray(nameArr);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, nameArr);
         add_TXT_name.setAdapter(adapter);
@@ -166,14 +157,16 @@ public class AddNewPillActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 for (Pill p :
-                        DataManager.hardPills()) {
+                        pills) {
                     if (add_TXT_name.getText().toString().matches(p.getName())) {
                         ImageLoader.getInstance().load(p.getImgURL(), add_IMG_pill);
                         imgURL = p.getImgURL();
+                        description = p.getDescription();
                         break;
                     } else {
                         ImageLoader.getInstance().load("https://www.clalit.co.il/he/new_article_images/medical/drugs/183828247/medium.jpg", add_IMG_pill);
                         imgURL = p.getImgURL();
+                        description = "";
                     }
                 }
             }
@@ -187,8 +180,6 @@ public class AddNewPillActivity extends AppCompatActivity {
 
         add_TXT_name.addTextChangedListener(textWatcher);
     }
-
-
     public void cabinetFromDB() {
         FirebaseDatabase.getInstance().getReference(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -200,6 +191,24 @@ public class AddNewPillActivity extends AppCompatActivity {
                 }
                 cabinet.setPrescriptions(prescriptions);
                 Log.d("CabFromDB",cabinet.toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void pillsFromDB() {
+        FirebaseDatabase.getInstance().getReference("pills").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+                    Pill pill = childSnapshot.getValue(Pill.class);
+                    pills.add(pill);
+                }
+                pillTextListener();
             }
 
             @Override

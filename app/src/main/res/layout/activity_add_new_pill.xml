@@ -11,271 +11,282 @@
         android:id="@+id/headline_LAY_menu"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:gravity="center"
-        android:layout_marginTop="15dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginRight="10dp"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Add New Pill"
             android:layout_gravity="center"
-            android:gravity=""
-            android:textSize="300sp"
+            android:layout_weight="1"
             android:autoSizeTextType="uniform"
+            android:gravity=""
+            android:text="Add New Pill"
 
-            android:layout_weight="1"/>
+            android:textSize="300sp" />
     </LinearLayout>
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/add_CRD_view"
+        android:layout_width="match_parent"
+        android:layout_height="530dp"
 
-    <LinearLayout
-        android:id="@+id/add_LAY_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_below="@id/headline_LAY_menu"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="50dp"
-        android:gravity="center">
+        android:layout_margin="5dp"
+        android:backgroundTint="@color/white"
+        app:cardElevation="22dp">
 
-        <!--        <com.google.android.material.textview.MaterialTextView-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="Quantity"-->
-        <!--            android:textSize="@dimen/title_text_size"/> -->
-
-
-        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:id="@+id/add_TXT_name"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:hint="Pill Name"
-            android:textSize="25sp" />
-    </LinearLayout>
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/add_IMG_pill"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@id/headline_LAY_menu"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp" />
-
-    <!--    Quantity-->
-    <LinearLayout
-        android:id="@+id/add_LAY_quantity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/add_LAY_name"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
-        android:gravity="center">
-
-
-        <com.google.android.material.textview.MaterialTextView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Quantity:"
-            android:textSize="@dimen/title_text_size" />
+            android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/add_SPN_quantity"
-            android:layout_width="75dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="15dp"
-            android:entries="@array/quantityItems"
-            android:scrollbarSize="25dp" />
+            <LinearLayout
+                android:id="@+id/add_LAY_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="25dp"
+                android:gravity="center">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Pills"
-            android:textSize="@dimen/title_text_size" />
-    </LinearLayout>
+                <!--        <com.google.android.material.textview.MaterialTextView-->
+                <!--            android:layout_width="wrap_content"-->
+                <!--            android:layout_height="wrap_content"-->
+                <!--            android:text="Quantity"-->
+                <!--            android:textSize="@dimen/title_text_size"/> -->
 
 
-    <!--    Duration -->
-    <LinearLayout
-        android:id="@+id/add_LAY_duration"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/add_LAY_quantity"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
-        android:gravity="center">
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/add_TXT_name"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Pill Name"
+                    android:textSize="25sp" />
+            </LinearLayout>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/add_IMG_pill"
+                android:layout_width="@dimen/pill_width"
+                android:layout_height="@dimen/pill_height"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp" />
+
+            <!--    Quantity-->
+            <LinearLayout
+                android:id="@+id/add_LAY_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_IMG_pill"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
 
 
-        <!--        <com.google.android.material.textview.MaterialTextView-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            android:layout_weight="1"-->
-        <!--            android:gravity="center"-->
-        <!--            android:text="Duration:"-->
-        <!--            android:textSize="@dimen/title_text_size" />-->
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Quantity:"
+                    android:textSize="@dimen/title_text_size" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/add_TXT_duration"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:hint="Duration"
-            android:inputType="numberDecimal"
-            android:textSize="25sp" />
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/add_SPN_quantity"
+                    android:layout_width="75dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="15dp"
+                    android:entries="@array/quantityItems"
+                    android:scrollbarSize="25dp" />
 
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/add_TXTVIEW_duration"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Days"
-            android:textSize="@dimen/title_text_size" />
-
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/add_CHK_permanent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:text="Permanent"
-            android:textSize="20sp" />
-    </LinearLayout>
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Pills"
+                    android:textSize="@dimen/title_text_size" />
+            </LinearLayout>
 
 
-    <!--    Before Or After Meal -->
-    <LinearLayout
-        android:id="@+id/add_LAY_meal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/add_LAY_duration"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
-        android:gravity="center">
+            <!--    Duration -->
+            <LinearLayout
+                android:id="@+id/add_LAY_duration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_LAY_quantity"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:gravity="center">
 
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Meal:"
-            android:textSize="@dimen/title_text_size" />
+                <!--        <com.google.android.material.textview.MaterialTextView-->
+                <!--            android:layout_width="match_parent"-->
+                <!--            android:layout_height="match_parent"-->
+                <!--            android:layout_weight="1"-->
+                <!--            android:gravity="center"-->
+                <!--            android:text="Duration:"-->
+                <!--            android:textSize="@dimen/title_text_size" />-->
 
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/add_SPN_meal"
-            android:layout_width="75dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="15dp"
-            android:layout_weight="1"
-            android:entries="@array/mealItems"
-            android:scrollbarSize="25dp" />
-    </LinearLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_TXT_duration"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Duration"
+                    android:inputType="numberDecimal"
+                    android:textSize="25sp" />
 
 
-    <!--    Before Or After Meal -->
-    <LinearLayout
-        android:id="@+id/add_LAY_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/add_LAY_meal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
-        android:gravity="center">
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/add_TXTVIEW_duration"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Days"
+                    android:textSize="@dimen/title_text_size" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/add_CHK_permanent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:text="Permanent"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Start Time:"
-            android:textSize="@dimen/title_text_size" />
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/add_SPN_hour"
-            android:layout_width="75dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="30dp"
-            android:layout_weight="1"
-            android:entries="@array/hourItems"
-            android:scrollbarSize="25dp" />
+            <!--    Before Or After Meal -->
+            <LinearLayout
+                android:id="@+id/add_LAY_meal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_LAY_duration"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:gravity="center">
 
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="15dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text=":"
-            android:textSize="@dimen/data_text_size" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Meal:"
+                    android:textSize="@dimen/title_text_size" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/add_SPN_meal"
+                    android:layout_width="75dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_weight="1"
+                    android:entries="@array/mealItems"
+                    android:scrollbarSize="25dp" />
+            </LinearLayout>
 
 
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/add_SPN_minute"
-            android:layout_width="75dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="15dp"
-            android:layout_weight="1"
-            android:entries="@array/minuteItems"
-            android:scrollbarSize="25dp" />
-    </LinearLayout>
+            <!--    Before Or After Meal -->
+            <LinearLayout
+                android:id="@+id/add_LAY_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_LAY_meal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:gravity="center">
 
 
-    <!--    Before Or After Meal -->
-    <LinearLayout
-        android:id="@+id/add_LAY_frequency"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/add_LAY_time"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
-        android:gravity="center">
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Start Time:"
+                    android:textSize="@dimen/title_text_size" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/add_SPN_hour"
+                    android:layout_width="75dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_weight="1"
+                    android:entries="@array/hourItems"
+                    android:scrollbarSize="25dp" />
 
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Frequency:"
-            android:textSize="@dimen/title_text_size" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="15dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text=":"
+                    android:textSize="@dimen/data_text_size" />
 
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/add_SPN_frequency"
-            android:layout_width="75dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="15dp"
-            android:entries="@array/quantityItems"
-            android:scrollbarSize="25dp"
 
-            />
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/add_SPN_minute"
+                    android:layout_width="75dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_weight="1"
+                    android:entries="@array/minuteItems"
+                    android:scrollbarSize="25dp" />
+            </LinearLayout>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Times A Day"
-            android:textSize="@dimen/title_text_size" />
-    </LinearLayout>
 
+            <!--    Before Or After Meal -->
+            <LinearLayout
+                android:id="@+id/add_LAY_frequency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_LAY_time"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:gravity="center">
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Frequency:"
+                    android:textSize="@dimen/title_text_size" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/add_SPN_frequency"
+                    android:layout_width="75dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="15dp"
+                    android:entries="@array/quantityItems"
+                    android:scrollbarSize="25dp"
+
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Times A Day"
+                    android:textSize="@dimen/title_text_size" />
+            </LinearLayout>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/add_BTN_add"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_below="@id/add_LAY_frequency"
+        android:layout_below="@id/add_CRD_view"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/green_500"
         app:icon="@drawable/outline_assignment_turned_in_24"
         app:iconGravity="textTop"
-        app:iconSize="70dp"
-        />
+        app:iconSize="70dp" />
 </RelativeLayout>
