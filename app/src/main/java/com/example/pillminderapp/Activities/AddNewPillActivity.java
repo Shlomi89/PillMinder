@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,7 +18,6 @@ import com.example.pillminderapp.Utilities.ImageLoader;
 import com.example.pillminderapp.Utilities.SignalManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.checkbox.MaterialCheckBox;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
@@ -82,7 +80,7 @@ public class AddNewPillActivity extends AppCompatActivity {
 
 
 
-    private boolean checkfields(){
+    private boolean checkFields(){
 
         if (add_CHK_permanent.isChecked()){
             if (!add_TXT_name.getText().toString().isEmpty())
@@ -95,10 +93,10 @@ public class AddNewPillActivity extends AppCompatActivity {
     }
 
     private void addPrescription() {
-        if (checkfields()) {
+        if (checkFields()) {
             double decimalHours = 24 / Double.parseDouble(add_SPN_frequency.getSelectedItem().toString());
-            int addhour = (int) decimalHours;
-            int addminute = (int) ((decimalHours - addhour) * 60);
+            int addHour = (int) decimalHours;
+            int addMinute = (int) ((decimalHours - addHour) * 60);
             int hour = Integer.parseInt(add_SPN_hour.getSelectedItem().toString());
             int minute = Integer.parseInt(add_SPN_minute.getSelectedItem().toString());
             for (int i = 0; i < Integer.parseInt(add_SPN_frequency.getSelectedItem().toString()); i++) {
@@ -111,20 +109,14 @@ public class AddNewPillActivity extends AppCompatActivity {
                         minute, // Minute
                         add_CHK_permanent.isChecked() ? -1 : LocalDate.now().plusDays(Integer.parseInt(add_TXT_duration.getText().toString())).toEpochDay()); // Duration
                 Log.d("Pres", prescription.toString());
-                hour += addhour;
+                hour += addHour;
                 if (hour >= 24)
                     hour = hour - 24;
-                minute += addminute;
+                minute += addMinute;
                 if (minute >= 60)
                     minute = minute - 60;
                 cabinet.addNewPrescription(prescription);
             }
-            //Add To Db / SharedPref
-
-            //Shared Pref
-//            Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class,new LocalDateAdapter())
-//                    .create();
-//            SharedPreferencesManager.getInstance().putString(PRESCRIPTION, gson.toJson(cabinet));
             //DB
             FirebaseDatabase db = FirebaseDatabase.getInstance();
             DatabaseReference ref = db.getReference(FirebaseAuth.getInstance().getCurrentUser().getUid());

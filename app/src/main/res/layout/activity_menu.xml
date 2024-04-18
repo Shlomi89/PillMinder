@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="@color/blue_300"
     tools:context=".Activities.MenuActivity">
 
     <LinearLayout
         android:id="@+id/headline_LAY_menu"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:backgroundTint="@color/white">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="My Meds"
+            android:text="@string/my_meds"
             android:layout_gravity="center"
             android:gravity="center"
             android:textSize="300sp"
@@ -30,7 +32,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/red"
 
-            android:text="Logout"
+            android:text="@string/logout"
             />
     </LinearLayout>
 
@@ -73,14 +75,14 @@
                 android:layout_height="60dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="30dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:backgroundTint="@color/blue_500"
-                android:text="+"
-                android:textSize="30sp"
+                app:icon="@drawable/baseline_add_24"
+                app:iconSize="40dp"
+                app:iconTint="@color/white"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:textAlignment="center"
-
                 android:textColor="@color/white"/>
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>

@@ -17,7 +17,7 @@ import com.example.pillminderapp.Adapters.PillAdapter;
 import com.example.pillminderapp.Interfaces.RemoveCallback;
 import com.example.pillminderapp.Model.Cabinet;
 import com.example.pillminderapp.Model.Prescription;
-import com.example.pillminderapp.Notifilication.NotificationHelper;
+import com.example.pillminderapp.Notification.NotificationHelper;
 import com.example.pillminderapp.R;
 import com.example.pillminderapp.Utilities.AlarmUtils;
 import com.firebase.ui.auth.AuthUI;
@@ -128,18 +128,13 @@ public class MenuActivity extends AppCompatActivity {
                 // Set Alert Title
                 builder.setTitle("Delete " + prescriptions.get(position).getName());
                 builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
-                    String nameOfpill = prescriptions.get(position).getName();
-                    prescriptions.removeIf(p -> p.getName().matches(nameOfpill));
+                    String nameOfPill = prescriptions.get(position).getName();
+                    prescriptions.removeIf(p -> p.getName().matches(nameOfPill));
                     cabinet.setPrescriptions(prescriptions);
                     FirebaseDatabase db = FirebaseDatabase.getInstance();
                     DatabaseReference ref = db.getReference(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     ref.setValue(cabinet);
-//                  SharedPreferencesManager.getInstance().putString("PRESCRIPTION", new Gson().toJson(cabinet));
                     recyclerview_list_pills.getAdapter().notifyDataSetChanged();
-
-//                pills.remove(position);
-//                recyclerview_list_pills.getAdapter().notifyItemRemoved(position);
-
                 });
                 builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
                     dialog.cancel();

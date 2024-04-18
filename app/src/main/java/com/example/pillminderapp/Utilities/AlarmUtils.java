@@ -1,13 +1,12 @@
 package com.example.pillminderapp.Utilities;
 
-import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
 import com.example.pillminderapp.Model.Prescription;
-import com.example.pillminderapp.Notifilication.NotificationReceiver;
+import com.example.pillminderapp.Notification.NotificationReceiver;
 
 import java.util.Calendar;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.pillminderapp.Notifilication;
+package com.example.pillminderapp.Notification;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

@@ -18,13 +18,13 @@
         android:orientation="horizontal">
 
         <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:autoSizeTextType="uniform"
             android:gravity=""
-            android:text="Add New Pill"
+            android:text="@string/add_new_pill"
 
             android:textSize="300sp" />
     </LinearLayout>
@@ -62,7 +62,7 @@
                     android:id="@+id/add_TXT_name"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:hint="Pill Name"
+                    android:hint="@string/pill_name"
                     android:textSize="25sp" />
             </LinearLayout>
 
@@ -90,7 +90,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Quantity:"
+                    android:text="@string/quantity"
                     android:textSize="@dimen/title_text_size" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
@@ -106,7 +106,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Pills"
+                    android:text="@string/pills"
                     android:textSize="@dimen/title_text_size" />
             </LinearLayout>
 
@@ -134,18 +134,18 @@
                     android:id="@+id/add_TXT_duration"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:hint="Duration"
+                    android:hint="@string/duration"
                     android:inputType="numberDecimal"
                     android:textSize="25sp" />
 
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/add_TXTVIEW_duration"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Days"
+                    android:text="@string/days"
                     android:textSize="@dimen/title_text_size" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
@@ -153,7 +153,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="15dp"
-                    android:text="Permanent"
+                    android:text="@string/permanent"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -174,7 +174,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Meal:"
+                    android:text="@string/meal"
                     android:textSize="@dimen/title_text_size" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
@@ -204,7 +204,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Start Time:"
+                    android:text="@string/start_time"
                     android:textSize="@dimen/title_text_size" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
@@ -254,7 +254,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Frequency:"
+                    android:text="@string/frequency"
                     android:textSize="@dimen/title_text_size" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
@@ -272,7 +272,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Times A Day"
+                    android:text="@string/times_a_day"
                     android:textSize="@dimen/title_text_size" />
             </LinearLayout>
         </RelativeLayout>
