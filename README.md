@@ -6,6 +6,7 @@ Pillminder is an Android application designed to help users remember to take the
 ## Features
 - Set multiple pill reminders with customizable times.
 - Add the next reminders accrding to frequency of taking the pill in a day.
+- Visual photo of the pill
 - Easily manage and edit your pill reminders.
 - User-friendly interface for intuitive navigation.
 
