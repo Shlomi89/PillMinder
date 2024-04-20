@@ -63,7 +63,7 @@ public class PillAdapter extends RecyclerView.Adapter<PillAdapter.PillViewHolder
         if (prescription.getEndDaysDate() == -1)
             holder.pill_LBL_daysLeft.setText("Permanent");
         else {
-            long dayDiff = prescription.getEndDaysDate() - LocalDate.now().toEpochDay() ;
+            long dayDiff = prescription.getEndDaysDate() - LocalDate.now().toEpochDay();
             holder.pill_LBL_daysLeft.setText("Days Left: " + dayDiff);
         }
     }

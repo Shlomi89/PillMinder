@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.pillminderapp.Activities.LoginActivity;
-import com.example.pillminderapp.Activities.MainActivity;
 import com.example.pillminderapp.R;
 
 @SuppressLint("CustomSplashScreen")

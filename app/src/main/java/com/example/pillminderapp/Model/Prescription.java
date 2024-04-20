@@ -11,7 +11,6 @@ public class Prescription implements Comparable<Prescription> {
     private int hour;
     private int minute;
 
-
     public Prescription() {
     }
 

@@ -156,7 +156,7 @@ public class AddNewPillActivity extends AppCompatActivity {
                         description = p.getDescription();
                         break;
                     } else {
-                        ImageLoader.getInstance().load("https://www.clalit.co.il/he/new_article_images/medical/drugs/183828247/medium.jpg", add_IMG_pill);
+                        ImageLoader.getInstance().load("https://media.istockphoto.com/id/1072626580/vector/medicine-flat-design-icon-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=I0ZVPGWIHoLbx6VC25v-aplRocMd7Al8OQUO2Mwri7Q=", add_IMG_pill);
                         imgURL = p.getImgURL();
                         description = "";
                     }

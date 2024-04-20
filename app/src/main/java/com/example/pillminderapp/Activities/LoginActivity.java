@@ -29,33 +29,15 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        findViews();
-//        initViews();
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
-
         if (user == null)
             login();
         else {
             changeActivity();
-            String uid = user.getUid();
-            String phone = user.getPhoneNumber();
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            String pid = user.getProviderId();
-            String tid = user.getTenantId();
-            Uri photo = user.getPhotoUrl();
-            int x=0;
         }
     }
 
-
-
-    private void findViews() {
-//        login_BTN_signOut = findViewById(R.id.login_BTN_signOut);
-    }
 
     private void login() {
         // Choose authentication providers

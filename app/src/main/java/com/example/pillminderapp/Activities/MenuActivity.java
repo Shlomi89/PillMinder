@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -51,7 +52,6 @@ public class MenuActivity extends AppCompatActivity {
         cabinetFromDB();
         findViews();
         menu_BTN_add.setOnClickListener(view -> changeActivity());
-
     }
 
     private void changeActivity() {
@@ -73,11 +73,15 @@ public class MenuActivity extends AppCompatActivity {
                 ArrayList<Prescription> prescriptions = new ArrayList<>();
                 for (DataSnapshot prescriptionSnapshot : snapshot.child("prescriptions").getChildren()) {
                     Prescription prescription = prescriptionSnapshot.getValue(Prescription.class);
-                    prescriptions.add(prescription);
+                    long dayDiff = prescription.getEndDaysDate() - LocalDate.now().toEpochDay();
+                    if (dayDiff >= 0)
+                        prescriptions.add(prescription);
                 }
                 cabinet.setPrescriptions(prescriptions);
-                Log.d("CabFromDB", cabinet.toString());
                 initViews();
+                FirebaseDatabase db = FirebaseDatabase.getInstance();
+                DatabaseReference ref = db.getReference(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                ref.setValue(cabinet);
 //                updateAlarms();
             }
 
@@ -111,7 +115,6 @@ public class MenuActivity extends AppCompatActivity {
             });
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
-
         });
         Log.d("Pills", cabinet.toString());
         PillAdapter pillAdapter = new PillAdapter(this, cabinet);
