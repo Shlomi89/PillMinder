@@ -47,6 +47,7 @@ public class AddNewPillActivity extends AppCompatActivity {
     private AppCompatSpinner add_SPN_hour;
     private AppCompatSpinner add_SPN_minute;
     private AppCompatSpinner add_SPN_frequency;
+    private ShapeableImageView add_DDL_name;
 
     private Cabinet cabinet = new Cabinet();
 
@@ -140,6 +141,9 @@ public class AddNewPillActivity extends AppCompatActivity {
         nameArr = names.toArray(nameArr);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, nameArr);
         add_TXT_name.setAdapter(adapter);
+        add_DDL_name.setOnClickListener(v -> {
+            add_TXT_name.showDropDown();
+        });
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -215,6 +219,7 @@ public class AddNewPillActivity extends AppCompatActivity {
 //        add_BTN_back = findViewById(R.id.add_BTN_back);
         add_TXT_name = findViewById(R.id.add_TXT_name);
         add_IMG_pill = findViewById(R.id.add_IMG_pill);
+        add_DDL_name = findViewById(R.id.add_DDL_name);
         add_SPN_quantity = findViewById(R.id.add_SPN_quantity);
         add_TXT_duration = findViewById(R.id.add_TXT_duration);
         add_TXTVIEW_duration = findViewById(R.id.add_TXTVIEW_duration);
