@@ -73,9 +73,14 @@ public class MenuActivity extends AppCompatActivity {
                 ArrayList<Prescription> prescriptions = new ArrayList<>();
                 for (DataSnapshot prescriptionSnapshot : snapshot.child("prescriptions").getChildren()) {
                     Prescription prescription = prescriptionSnapshot.getValue(Prescription.class);
-                    long dayDiff = prescription.getEndDaysDate() - LocalDate.now().toEpochDay();
-                    if (dayDiff >= 0)
+                    long daysleft = prescription.getEndDaysDate();
+                    if (daysleft == -1)
                         prescriptions.add(prescription);
+                    else {
+                        long dayDiff = prescription.getEndDaysDate() - LocalDate.now().toEpochDay();
+                        if (dayDiff >= 0)
+                            prescriptions.add(prescription);
+                    }
                 }
                 cabinet.setPrescriptions(prescriptions);
                 initViews();
